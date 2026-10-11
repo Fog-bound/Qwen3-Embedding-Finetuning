@@ -95,8 +95,7 @@ Qwen3-Embedding-Finetuning/
 
 1. **数据格式**：swift embedding 任务要求 `positive_messages` 为两层列表 `[[{...}]]`
 2. **LoRA 微调**：仅训练 q/k/v/o/gate/up/down 投影层，参数量小、训练快
-3. **云端训练**：阿里云 PAI DSW 平台，A10 显卡，torch 2.5.0 + ms-swift
-4. **兼容性处理**：解决 torch 版本与 swift 的 FSDPModule 导入兼容性问题
+3. **云端训练**：阿里云 PAI DSW 平台，A10 显卡，32 分钟完成训练
 
 ## 环境依赖
 
