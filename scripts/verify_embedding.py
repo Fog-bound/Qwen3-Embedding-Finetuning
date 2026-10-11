@@ -15,8 +15,13 @@ from transformers import AutoModel, AutoTokenizer
 from peft import PeftModel
 
 # ============ 路径配置 ============
-BASE_MODEL_PATH = r"C:\Users\huyu\.cache\modelscope\models\Qwen--Qwen3-Embedding-0.6B\snapshots\master"
-LORA_PATH = r"C:\Users\huyu\Desktop\大模型应用开发\qwen-embeding(微调)\Qwen-embedding_funeturn\checkpoint-6438\checkpoint-6438"
+# 基础模型：填模型名会自动从 ModelScope/HuggingFace 下载
+# 也可以填本地路径，如 "./Qwen3-Embedding-0.6B"
+BASE_MODEL_PATH = "Qwen/Qwen3-Embedding-0.6B"
+
+# LoRA 权重路径：训练完成后将 checkpoint-6438 文件夹放在项目根目录
+# 或修改为你的本地路径，如 "./models/checkpoint-6438"
+LORA_PATH = "./checkpoint-6438"
 
 # ============ 加载模型 ============
 print("正在加载基础模型...")
