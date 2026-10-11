@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv/
+
+# 模型权重（太大，不上传）
+*.bin
+*.safetensors
+*.pt
+*.pth
+Qwen*/
+checkpoint*/
+output_model/
+
+# 大数据集（超过10MB不放GitHub）
+data/*.jsonl
+data/*.csv
+!data/*.md
+
+# 环境变量和密钥
+.env
+.env.local
+*.key
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 系统
+.DS_Store
+Thumbs.db
