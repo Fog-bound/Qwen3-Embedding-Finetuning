@@ -18,10 +18,10 @@ Qwen*/
 checkpoint*/
 output_model/
 
-# 大数据集（超过10MB不放GitHub）
-data/*.jsonl
-data/*.csv
-!data/*.md
+# 数据集（本项目训练数据6.8MB，可直接上传）
+# 如需排除更大数据集，可取消下面注释
+# data/*.jsonl
+# data/*.csv
 
 # 环境变量和密钥
 .env
