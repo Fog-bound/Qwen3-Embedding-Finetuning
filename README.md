@@ -50,8 +50,13 @@ pip install transformers peft safetensors
 
 ### 2. 数据准备
 
+仓库已包含转换好的训练数据 `data/train_similarity_data.jsonl`（34335条），可直接用于训练。
+
+如需自行转换：
 ```bash
-# 转换 AFQMC 数据集为 swift 格式
+# 1. 将原始 AFQMC 数据保存为 data/train_raw.jsonl
+#    格式：{"text1": "句子A", "text2": "句子B", "label": 1}
+# 2. 运行转换脚本
 python scripts/data_converter.py
 # 输出：data/train_similarity_data.jsonl
 ```
@@ -66,14 +71,18 @@ python scripts/data_converter.py
 ### 3. 开始训练
 
 ```bash
-# 云端训练（阿里云 PAI DSW / 任意 GPU 环境）
+# 需 GPU 环境（推荐 16GB+ 显存）
+# 参考：A10 24GB，34335条数据，3 epoch，约 32 分钟，显存约 1.7GB
 bash train.sh
 ```
+
+训练完成后，LoRA 权重保存在 `output_model/qwen_embedding/checkpoint-*/` 目录。
 
 ### 4. 验证效果
 
 ```bash
-# 本地加载 LoRA 权重，计算句子相似度
+# 将训练好的 checkpoint-* 文件夹复制到项目根目录，重命名为 checkpoint-6438
+# 然后运行验证脚本（自动检测 CPU/GPU）
 python scripts/verify_embedding.py
 ```
 
@@ -82,12 +91,14 @@ python scripts/verify_embedding.py
 ```
 Qwen3-Embedding-Finetuning/
 ├── scripts/
-│   ├── data_converter.py      # 数据格式转换脚本
-│   └── verify_embedding.py    # 推理验证脚本
+│   ├── data_converter.py      # 数据格式转换脚本（含容错处理）
+│   └── verify_embedding.py    # 推理验证脚本（自动检测 CPU/GPU）
 ├── data/
-│   └── train_similarity_data.jsonl  # 训练数据（34335条）
-├── train.sh                   # 训练启动脚本
+│   └── train_similarity_data.jsonl  # 训练数据（34335条，已转换好）
+├── train.sh                   # 训练启动脚本（含文件检查和路径提示）
 ├── requirements.txt           # 依赖清单
+├── .env.example               # 环境变量模板
+├── .gitignore                 # Git 忽略规则
 └── README.md
 ```
 

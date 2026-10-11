@@ -16,13 +16,18 @@ BASE_MODEL_PATH = "Qwen/Qwen3-Embedding-0.6B"
 # LoRA 权重：训练后将 checkpoint-6438 放在项目根目录
 LORA_PATH = "./checkpoint-6438"
 
+# 自动检测设备：有 GPU 用 cuda+float16，否则用 cpu+float32（CPU 不完全支持 float16）
+DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+TORCH_DTYPE = torch.float16 if DEVICE == "cuda" else torch.float32
+print(f"使用设备: {DEVICE}, 精度: {TORCH_DTYPE}")
+
 print("正在加载基础模型...")
 tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL_PATH, trust_remote_code=True)
 base_model = AutoModel.from_pretrained(
     BASE_MODEL_PATH,
     trust_remote_code=True,
-    torch_dtype=torch.float16,
-    device_map="cpu"
+    torch_dtype=TORCH_DTYPE,
+    device_map=DEVICE
 )
 
 print("正在加载 LoRA 权重...")
